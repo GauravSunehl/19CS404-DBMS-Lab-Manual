@@ -1,5 +1,3 @@
-# Experiment 2: DDL Commands
-
 ## AIM
 To study and implement DDL commands and different types of constraints.
 
@@ -105,123 +103,330 @@ CREATE TABLE Table_Name (
 
 **Question 1**
 --
--- Paste Question 1 here
+Insert all employees from Former_employees into Employee
 
-```sql
--- Paste your SQL code below for Question 1
+Table attributes are EmployeeID, Name, Department, Salary
+
+For example:
+
+Test	Result
+select * from Employee;
+EmployeeID  Name        Department  Salary
+----------  ----------  ----------  ----------
+201         John Doe    HR          50000
+202         Jane Smith  Engineerin  75000
+203         Emily Davi  Marketing   60000
+
+```
+INSERT INTO Employee
+SELECT * FROM Former_employees;
+
 ```
 
 **Output:**
 
-![Output1](output.png)
+<img width="1233" height="352" alt="Screenshot 2025-10-06 091852" src="https://github.com/user-attachments/assets/0e80e24c-1dfd-4f5a-85d6-2283f6029f68" />
+
 
 **Question 2**
 ---
--- Paste Question 2 here
+-- Write an SQL query to add two new columns, first_name and last_name, to the table employee. Both columns should have a data type of varchar(50).
+
+For example:
+
+Test	Result
+pragma table_info('employee');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          integer     0                       0
+1           salary      number      0                       0
+2           first_name  varchar(50  0                       0
+3           last_name   varchar(50  0                       0
+
 
 ```sql
--- Paste your SQL code below for Question 2
+ALTER TABLE employee ADD COLUMN first_name varchar(50);
+ALTER TABLE employee ADD COLUMN last_name varchar(50);
 ```
 
 **Output:**
 
-![Output2](output.png)
+<img width="1222" height="391" alt="Screenshot 2025-10-06 092148" src="https://github.com/user-attachments/assets/84d2cfaa-9c3b-4e31-9c7d-855d925c7075" />
+
 
 **Question 3**
 ---
--- Paste Question 3 here
+Create a table named Members with the following columns:
+
+MemberID as INTEGER
+MemberName as TEXT
+JoinDate as DATE
+For example:
+
+Test	Result
+pragma table_info('Members');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           MemberID    INTEGER     0                       0
+1           MemberName  TEXT        0                       0
+2           JoinDate    DATE        0                       0
 
 ```sql
--- Paste your SQL code below for Question 3
+CREATE TABLE Members (
+    MemberID INTEGER,
+    MemberName TEXT,
+    JoinDate DATE
+);
 ```
 
 **Output:**
 
-![Output3](output.png)
+<img width="1224" height="434" alt="Screenshot 2025-10-06 092253" src="https://github.com/user-attachments/assets/607cab03-e919-4d6d-a7e5-91cb127b1e5f" />
+
 
 **Question 4**
 ---
--- Paste Question 4 here
+Create a table named Invoices with the following constraints:
+
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+DueDate as DATE should be greater than the InvoiceDate.
+Amount as REAL should be greater than 0.
+For example:
+
+Test	Result
+INSERT INTO Invoices (InvoiceID, InvoiceDate)
+VALUES (1, '2024-08-08'),(1,'2024-09-08');
+Error: UNIQUE constraint failed: Invoices.InvoiceID
+
 
 ```sql
--- Paste your SQL code below for Question 4
+CREATE TABLE Invoices (
+    InvoiceID INTEGER PRIMARY KEY,
+    InvoiceDate DATE,
+    DueDate DATE,
+    Amount REAL CHECK (Amount > 0),
+    CHECK (DueDate > InvoiceDate)
+);
 ```
 
 **Output:**
 
-![Output4](output.png)
+<img width="1230" height="362" alt="Screenshot 2025-10-06 092412" src="https://github.com/user-attachments/assets/dff7f8d4-073f-4817-95b7-80afa3506d2d" />
+
 
 **Question 5**
 ---
--- Paste Question 5 here
+Insert the below data into the Books table, allowing the Publisher and Year columns to take their default values.
+
+ISBN             Title                 Author
+---------------  --------------------  ---------------
+978-6655443321   Big Data Analytics    Karen Adams
+
+Note: The Publisher and Year columns will use their default values.
+ 
+ 
+For example:
+
+Test	Result
+SELECT ISBN, Title, Author
+FROM Books 
+
+
+ISBN             Title                 Author
+---------------  --------------------  ---------------
+978-6655443321   Big Data Analytics    Karen Adams
+
 
 ```sql
--- Paste your SQL code below for Question 5
+INSERT INTO Books (ISBN, Title, Author)
+VALUES ('978-6655443321', 'Big Data Analytics', 'Karen Adams');
 ```
 
 **Output:**
 
-![Output5](output.png)
+<img width="1227" height="410" alt="Screenshot 2025-10-06 092515" src="https://github.com/user-attachments/assets/d2bd0238-9171-4cd8-90b1-7d644a2f5155" />
+
 
 **Question 6**
 ---
--- Paste Question 6 here
+Write a SQL Query  to Rename attribute "name" to "first_name"  and add mobilenumber as number ,DOB as Date,State as varchar(30) in the table Companies. 
+
+For example:
+
+Test	Result
+pragma table_info('Companies');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          int         0                       0
+1           first_name  varchar(50  0                       0
+2           address     text        0                       0
+3           email       varchar(50  0                       0
+4           phone       varchar(10  0                       0
+5           mobilenumb  number      0                       0
+6           DOB         Date        0                       0
+7           State       varchar(30  0                       0
+
 
 ```sql
--- Paste your SQL code below for Question 6
+ALTER TABLE Companies RENAME COLUMN name TO first_name;
+
+ALTER TABLE Companies ADD COLUMN mobilenumb number;
+ALTER TABLE Companies ADD COLUMN DOB Date;
+ALTER TABLE Companies ADD COLUMN State varchar(30);
 ```
 
 **Output:**
 
-![Output6](output.png)
+<img width="1222" height="486" alt="Screenshot 2025-10-06 092614" src="https://github.com/user-attachments/assets/3f35f0d9-a9ae-47af-a49c-9c31bd0815bd" />
+
 
 **Question 7**
 ---
--- Paste Question 7 here
+In the Books table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
+
+ISBN             Title                      Author           Publisher   Year
+---------------  -------------------------  ---------------  ----------  ----------
+978-1234567890   Introduction to AI         John Doe
+978-9876543210   Deep Learning              Jane Doe         TechPress   2022
+978-1122334455   Cybersecurity Essentials   Alice Smith                  2021
+For example:
+
+Test	Result
+SELECT * FROM Books;
+ISBN             Title                      Author           Publisher   Year
+---------------  -------------------------  ---------------  ----------  ----------
+978-1234567890   Introduction to AI         John Doe
+978-9876543210   Deep Learning              Jane Doe         TechPress   2022
+978-1122334455   Cybersecurity Essentials   Alice Smith                  2021
 
 ```sql
--- Paste your SQL code below for Question 7
+INSERT INTO Books (ISBN, Title, Author)
+VALUES ('978-1234567890', 'Introduction to AI', 'John Doe');
+
+INSERT INTO Books (ISBN, Title, Author, Publisher, Year)
+VALUES ('978-9876543210', 'Deep Learning', 'Jane Doe', 'TechPress', 2022);
+
+INSERT INTO Books (ISBN, Title, Author, Publisher, Year)
+VALUES ('978-1122334455', 'Cybersecurity Essentials', 'Alice Smith', NULL, 2021);
 ```
 
 **Output:**
 
-![Output7](output.png)
+<img width="1227" height="364" alt="Screenshot 2025-10-06 092713" src="https://github.com/user-attachments/assets/f8c7f01c-c50c-492a-8328-ace38e7007e7" />
+
+
 
 **Question 8**
 ---
--- Paste Question 8 here
+Create a new table named item with the following specifications and constraints:
+item_id as TEXT and as primary key.
+item_desc as TEXT.
+rate as INTEGER.
+icom_id as TEXT with a length of 4.
+icom_id is a foreign key referencing com_id in the company table.
+The foreign key should set NULL on updates and deletes.
+item_desc and rate should not accept NULL.
+For example:
+
+Test	Result
+INSERT INTO item VALUES("ITM5","Charlie Gold",700,"COM4");
+UPDATE company SET com_id='COM5' WHERE com_id='COM4';
+SELECT * FROM item;
+item_id     item_desc     rate        icom_id
+----------  ------------  ----------  ----------
+ITM5        Charlie Gold  700
 
 ```sql
--- Paste your SQL code below for Question 8
+CREATE TABLE item (
+    item_id TEXT PRIMARY KEY,
+    item_desc TEXT NOT NULL,
+    rate INTEGER NOT NULL,
+    icom_id TEXT CHECK(length(icom_id) = 4),
+    FOREIGN KEY(icom_id) REFERENCES company(com_id) 
+        ON UPDATE SET NULL 
+        ON DELETE SET NULL
+);
 ```
 
 **Output:**
 
-![Output8](output.png)
+<img width="1227" height="428" alt="Screenshot 2025-10-06 092826" src="https://github.com/user-attachments/assets/d98bb24c-7c5e-4a99-a9a0-af0ced73357b" />
+
 
 **Question 9**
 ---
--- Paste Question 9 here
+Create a new table named products with the following specifications:
+product_id as INTEGER and primary key.
+product_name as TEXT and not NULL.
+list_price as DECIMAL (10, 2) and not NULL.
+discount as DECIMAL (10, 2) with a default value of 0 and not NULL.
+A CHECK constraint at the table level to ensure:
+list_price is greater than or equal to discount
+discount is greater than or equal to 0
+list_price is greater than or equal to 0
+For example:
+
+Test	Result
+INSERT INTO products (product_id, product_name, list_price) VALUES (2, 'Product B', 50.00);
+SELECT * FROM products;
+product_id  product_name  list_price  discount
+----------  ------------  ----------  ----------
+2           Product B     50          0
+
 
 ```sql
--- Paste your SQL code below for Question 9
+CREATE TABLE products (
+    product_id INTEGER PRIMARY KEY,
+    product_name TEXT NOT NULL,
+    list_price DECIMAL(10, 2) NOT NULL,
+    discount DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    CHECK (list_price >= discount AND discount >= 0)
+);
 ```
 
 **Output:**
 
-![Output9](output.png)
+<img width="1233" height="361" alt="Screenshot 2025-10-06 092943" src="https://github.com/user-attachments/assets/6208895a-88d8-4fa7-8c55-c24b0489806d" />
+
 
 **Question 10**
 ---
--- Paste Question 10 here
+Create a new table named item with the following specifications and constraints:
+item_id as TEXT and as primary key.
+item_desc as TEXT.
+rate as INTEGER.
+icom_id as TEXT with a length of 4.
+icom_id is a foreign key referencing com_id in the company table.
+The foreign key should cascade updates and deletes.
+item_desc and rate should not accept NULL.
+For example:
+
+Test	Result
+INSERT INTO item VALUES("ITM5","Charlie Gold",700,"COM4");
+UPDATE company SET com_id='COM5' WHERE com_id='COM4';
+SELECT * FROM item;
+item_id     item_desc     rate        icom_id
+----------  ------------  ----------  ----------
+ITM5        Charlie Gold  700         COM5
+
 
 ```sql
--- Paste your SQL code below for Question 10
+CREATE TABLE item (
+    item_id TEXT PRIMARY KEY,
+    item_desc TEXT NOT NULL,
+    rate INTEGER NOT NULL,
+    icom_id TEXT CHECK(length(icom_id) = 4),
+    FOREIGN KEY(icom_id) REFERENCES company(com_id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
 ```
 
 **Output:**
 
-![Output10](output.png)
+<img width="1240" height="434" alt="Screenshot 2025-10-06 093047" src="https://github.com/user-attachments/assets/230166a8-71d1-4187-9860-be024f896049" />
+
 
 
 ## RESULT
